@@ -7,7 +7,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-// You can import your routes here
+// Import your routes
 import authRoutes from "./server/routes/auth.js";
 
 // Create an Express application
@@ -20,14 +20,13 @@ app.use(express.json());
 // Routes
 app.use("/auth", authRoutes);
 
-// Define the port and host for the server to listen on.
+// Define the port
 const PORT = process.env.PORT || 5000;
-const hostName = process.env.HOSTNAME || "localhost";
 const MONGO_URI = process.env.MONGO_URI;
 
 // Check if the MONGO_URI is defined
 if (!MONGO_URI) {
-  console.error("Error: MONGO_URI is not defined in the environment variables.");
+  console.error("❌ Error: MONGO_URI is not defined in the environment variables.");
   process.exit(1);
 }
 
@@ -35,19 +34,17 @@ if (!MONGO_URI) {
 mongoose
   .connect(MONGO_URI)
   .then(() => {
-    // If the connection is successful, start the server
-    console.log("Connected to MongoDB");
+    console.log("✅ Connected to MongoDB");
     app.listen(PORT, () => {
-      console.log(`Server running at http://${hostName}:${PORT}/`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
   })
   .catch((err) => {
-    // If there's an error connecting to the database, log the error and exit
-    console.error("MongoDB connection error:", err);
-    process.exit(1);
+    console.error("❌ MongoDB connection error:", err.message);
   });
 
 // A simple route to test that the API is running
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.send("API is running... 🚀");
 });
+;
